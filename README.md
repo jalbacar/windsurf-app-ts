@@ -81,18 +81,40 @@ Este proyecto es un servidor web desarrollado con Node.js y TypeScript, utilizan
 
 ```
 .
-├── src/                  # Código fuente
-│   ├── config/           # Configuración de la aplicación
-│   ├── middleware/       # Middleware personalizado
-│   ├── routes/           # Definición de rutas
-│   └── index.ts          # Punto de entrada de la aplicación
-├── dist/                 # Código compilado (generado)
-├── .env.example          # Ejemplo de variables de entorno
-├── .gitignore            # Archivos ignorados por Git
-├── package.json          # Dependencias y scripts
-├── tsconfig.json         # Configuración de TypeScript
-└── README.md             # Este archivo
+├── .github/             # Configuración de GitHub
+│   └── workflows/       # Workflows de GitHub Actions
+│       └── ci.yml       # Configuración de CI
+├── src/                 # Código fuente
+│   ├── config/          # Configuración de la aplicación
+│   ├── middleware/      # Middleware personalizado
+│   ├── routes/          # Definición de rutas
+│   │   ├── api.ts       # Rutas de la API
+│   │   ├── users.ts     # Rutas de usuarios
+│   │   └── index.ts     # Configuración de rutas
+│   └── index.ts         # Punto de entrada de la aplicación
+├── dist/                # Código compilado (generado)
+├── .env.example         # Ejemplo de variables de entorno
+├── .gitignore           # Archivos ignorados por Git
+├── package.json         # Dependencias y scripts
+├── tsconfig.json        # Configuración de TypeScript
+└── README.md            # Este archivo
 ```
+
+## Integración Continua (CI/CD)
+
+Este proyecto utiliza GitHub Actions para la integración continua. El workflow se activa automáticamente en cada push a la rama `main` y realiza las siguientes tareas:
+
+1. **Checkout del código**: Obtiene la última versión del código.
+2. **Configuración de Node.js**: Configura el entorno de Node.js.
+3. **Instalación de dependencias**: Instala todas las dependencias necesarias.
+4. **Ejecución del linter**: Verifica la calidad del código con ESLint.
+5. **Compilación del proyecto**: Compila el código TypeScript para asegurar que no hay errores.
+
+### Archivo de configuración
+
+El archivo de configuración se encuentra en `.github/workflows/ci.yml`. Puedes personalizar este archivo según tus necesidades específicas.
+
+Para más información sobre GitHub Actions, consulta la [documentación oficial](https://docs.github.com/es/actions).
 
 ## Desarrollo
 
