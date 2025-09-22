@@ -4,10 +4,10 @@ name: CI
 on:
   # Se activará en push a la rama main
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   # También se activará en pull requests hacia main (opcional)
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
 
 # Un workflow consiste en uno o más jobs que pueden ejecutarse secuencialmente o en paralelo
 jobs:
@@ -22,23 +22,23 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v3
 
+      # Instalar pnpm globalmente
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
       # Configurar Node.js
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Puedes ajustar la versión según tus necesidades
-          cache: 'pnpm' # Cachear las dependencias para acelerar la instalación
-
-      # Instalar pnpm
-      - name: Instalar pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8 # Ajusta la versión de pnpm según tus necesidades
-          run_install: false
+          node-version: '18'
+          cache: 'pnpm'
 
       # Instalar dependencias
       - name: Instalar dependencias
-        run: pnpm install --frozen-lockfile # Equivalente a npm ci pero para pnpm
+        run: pnpm install --frozen-lockfile
 
       # Ejecutar linter
       - name: Ejecutar linter
