@@ -1,0 +1,54 @@
+name: CI
+
+# Controla cuándo se ejecutará el workflow
+on:
+  # Se activará en push a la rama main
+  push:
+    branches: [ main ]
+  # También se activará en pull requests hacia main (opcional)
+  pull_request:
+    branches: [ main ]
+
+# Un workflow consiste en uno o más jobs que pueden ejecutarse secuencialmente o en paralelo
+jobs:
+  # Este workflow contiene un único job llamado "build"
+  build:
+    # El tipo de runner en el que se ejecutará el job
+    runs-on: ubuntu-latest
+
+    # Pasos que se ejecutarán como parte del job
+    steps:
+      # Checkout del código del repositorio
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      # Configurar Node.js
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Puedes ajustar la versión según tus necesidades
+          cache: 'pnpm' # Cachear las dependencias para acelerar la instalación
+
+      # Instalar pnpm
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8 # Ajusta la versión de pnpm según tus necesidades
+          run_install: false
+
+      # Instalar dependencias
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile # Equivalente a npm ci pero para pnpm
+
+      # Ejecutar linter
+      - name: Ejecutar linter
+        run: pnpm run lint
+
+      # Compilar el proyecto
+      - name: Compilar TypeScript
+        run: pnpm run build
+
+      # Opcional: Ejecutar tests si los tienes
+      # - name: Ejecutar tests
+      #   run: pnpm test
+
